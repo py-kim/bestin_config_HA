@@ -27,7 +27,7 @@
 
 - 'environment_variables.json'의 파일 내용 수정 : Host IP 주소, 계정 id, 계정 password 및 쿠키 정보에서 알아낸 user_name의 값 입력
 
-- 'cookie_phpsessid' 파일 생성 : 쿠키 정보에서 알아낸 PHPSESSID의 값 입력, 초기에 한번만 입력하면 되며 automations.yaml을 통해 만료되기 전 한달에 한번 자동 업데이트 됨.
+- 'cookie_phpsessid' 파일 내용 수정 : 쿠키 정보에서 알아낸 PHPSESSID의 값 입력, 초기에 한번만 입력하면 되며 automations.yaml을 통해 만료되기 전 한달에 한번 자동 업데이트 됨.
 
 - 본인 거주 아파트 환경에 맞게 방 갯수, 조명 갯수, 전원 소켓 갯수에 따라 sensors.yaml, lights.yaml, switches.yaml 파일 내용 수정 필요, 직접 API 명령을 날려보며 작업하기를 권장함
 
