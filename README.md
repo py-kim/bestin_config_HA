@@ -73,3 +73,6 @@
 1. 조명
 2. 난방 (온도, 가동상태)
 3. 전원 소켓
+
+## 작성시 참조한 github
+https://github.com/gaussian8/bestin-ha-config
