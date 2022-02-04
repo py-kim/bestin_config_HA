@@ -1,0 +1,13 @@
+# Configure a default setup of Home Assistant (frontend, api, etc)
+default_config:
+
+homeassistant:
+  allowlist_external_dirs:
+    - "/config" # /config 폴더 안의 파일을 가져올 것이기 때문에 반드시 설정 필요
+
+sensor: !include sensors.yaml
+rest_command: !include rest_commands.yaml
+shell_command: !include shell_commands.yaml
+automation: !include automations.yaml
+light: !include lights.yaml
+switch: !include switches.yaml

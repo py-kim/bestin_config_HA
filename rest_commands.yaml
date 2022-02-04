@@ -1,0 +1,17 @@
+light_control_room:
+  url: "http://{{states('sensor.host_ip')}}/webapp/data/getHomeDevice.php?req_name=remote_access_light&req_action=control&req_unit_num={{unit_num}}&req_ctrl_action={{control_action}}&req_dev_num={{room_num}}"
+  method: GET
+  headers:
+    Cookie: 'PHPSESSID={{ states("sensor.bestin_cookie_phpsessid") }}; user_id={{states("sensor.id")}}; user_name={{states("sensor.user_name")}}'
+    
+light_control_living_room:
+  url: "http://{{states('sensor.host_ip')}}/webapp/data/getHomeDevice.php?req_name=remote_access_livinglight&req_action=control&req_unit_num={{unit_num}}&req_ctrl_action={{control_action}}"
+  method: GET
+  headers:
+    Cookie: 'PHPSESSID={{ states("sensor.bestin_cookie_phpsessid") }}; user_id={{states("sensor.id")}}; user_name={{states("sensor.user_name")}}'
+    
+electric_control:
+  url: "http://{{states('sensor.host_ip')}}/webapp/data/getHomeDevice.php?req_name=remote_access_electric&req_action=control&req_unit_num={{unit_num}}&req_ctrl_action={{control_action}}&req_dev_num={{room_num}}"
+  method: GET
+  headers:
+    Cookie: 'PHPSESSID={{ states("sensor.bestin_cookie_phpsessid") }}; user_id={{states("sensor.id")}}; user_name={{states("sensor.user_name")}}'

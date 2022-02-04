@@ -1,0 +1,116 @@
+- platform: template
+  sensors:  
+    heating_livingroom:
+      friendly_name: "거실 난방상태"
+      value_template: "{{ states('sensor.heating_status_livingroom').split('/')[0] }}" 
+    temperature_livingroom:
+      friendly_name: "거실 현재온도"
+      value_template: "{{ states('sensor.heating_status_livingroom').split('/')[2] }}"
+      unit_of_measurement: "℃"
+      icon_template: mdi:thermometer
+    heating_mainroom:
+      friendly_name: "안방 난방상태"
+      value_template: "{{ states('sensor.heating_status_mainroom').split('/')[0] }}" 
+    temperature_mainroom:
+      friendly_name: "안방 현재온도"
+      value_template: "{{ states('sensor.heating_status_mainroom').split('/')[2] }}"
+      unit_of_measurement: "℃"
+      icon_template: mdi:thermometer
+    heating_trainingroom:
+      friendly_name: "운동방 난방상태"
+      value_template: "{{ states('sensor.heating_status_trainingroom').split('/')[0] }}" 
+    temperature_trainingroom:
+      friendly_name: "운동방 현재온도"
+      value_template: "{{ states('sensor.heating_status_trainingroom').split('/')[2] }}"
+      unit_of_measurement: "℃"
+      icon_template: mdi:thermometer
+    heating_seojae:
+      friendly_name: "서재 난방상태"
+      value_template: "{{ states('sensor.heating_status_seojae').split('/')[0] }}" 
+    temperature_seojae:
+      friendly_name: "서재 현재온도"
+      value_template: "{{ states('sensor.heating_status_seojae').split('/')[2] }}"
+      unit_of_measurement: "℃"
+      icon_template: mdi:thermometer
+
+- platform: file
+  name: bestin_cookie_phpsessid
+  file_path: /config/cookie_phpsessid
+  
+- platform: file
+  name: host_ip
+  file_path: /config/environment_variables.json
+  value_template: "{{value_json.smarthome_hostip}}"
+
+- platform: file  
+  name: id
+  file_path: /config/environment_variables.json
+  value_template: "{{value_json.smarthome_id}}"
+
+- platform: file
+  name: password
+  file_path: /config/environment_variables.json
+  value_template: "{{value_json.smarthome_pw}}"
+
+- platform: file
+  name: username
+  file_path: /config/environment_variables.json
+  value_template: "{{value_json.smarthome_username_url_encode}}"
+  
+- platform: command_line
+  name: lights_kitchen
+  scan_interval: 60
+  command: "curl --location --request GET 'http://{{states('sensor.host_ip')}}/webapp/data/getHomeDevice.php?req_name=remote_access_light&req_action=status&req_dev_num=1' --header 'Cookie: PHPSESSID={{states('sensor.bestin_cookie_phpsessid')}}; user_id={{states('sensor.id')}}; user_name={{states('sensor.user_name')}}' | grep -oP '(?<=unit_status=\")(on)|(?<=unit_status=\")(off)'"
+
+- platform: command_line
+  name: lights_livingroom
+  scan_interval: 60
+  command: "curl --location --request GET 'http://{{states('sensor.host_ip')}}/webapp/data/getHomeDevice.php?req_name=remote_access_livinglight&req_action=status' --header 'Cookie: PHPSESSID={{states('sensor.bestin_cookie_phpsessid')}}; user_id={{states('sensor.id')}}; user_name={{states('sensor.user_name')}}' | grep -oP '(?<=unit_status=\")(on)|(?<=unit_status=\")(off)'"
+
+- platform: command_line
+  name: lights_mainroom
+  scan_interval: 60
+  command: "curl --location --request GET 'http://{{states('sensor.host_ip')}}/webapp/data/getHomeDevice.php?req_name=remote_access_light&req_action=status&req_dev_num=2' --header 'Cookie: PHPSESSID={{states('sensor.bestin_cookie_phpsessid')}}; user_id={{states('sensor.id')}}; user_name={{states('sensor.user_name')}}' | grep -oP '(?<=unit_status=\")(on)|(?<=unit_status=\")(off)'"
+- platform: command_line
+  name: lights_trainingroom
+  scan_interval: 60
+  command: "curl --location --request GET 'http://{{states('sensor.host_ip')}}/webapp/data/getHomeDevice.php?req_name=remote_access_light&req_action=status&req_dev_num=3' --header 'Cookie: PHPSESSID={{states('sensor.bestin_cookie_phpsessid')}}; user_id={{states('sensor.id')}}; user_name={{states('sensor.user_name')}}' | grep -oP '(?<=unit_status=\")(on)|(?<=unit_status=\")(off)'"
+- platform: command_line
+  name: lights_seojae
+  scan_interval: 60
+  command: "curl --location --request GET 'http://{{states('sensor.host_ip')}}/webapp/data/getHomeDevice.php?req_name=remote_access_light&req_action=status&req_dev_num=4' --header 'Cookie: PHPSESSID={{states('sensor.bestin_cookie_phpsessid')}}; user_id={{states('sensor.id')}}; user_name={{states('sensor.user_name')}}' | grep -oP '(?<=unit_status=\")(on)|(?<=unit_status=\")(off)'" 
+
+- platform: command_line
+  name: switches_kitchen
+  scan_interval: 60
+  command: "curl --location --request GET 'http://{{states('sensor.host_ip')}}/webapp/data/getHomeDevice.php?req_name=remote_access_electric&req_action=status&req_dev_num=1' --header 'Cookie: PHPSESSID={{states('sensor.bestin_cookie_phpsessid')}}; user_id={{states('sensor.id')}}; user_name={{states('sensor.user_name')}}' | grep -oP '(?<=unit_status=\")(unset/on)|(?<=unit_status=\")(unset/off)'"  
+- platform: command_line
+  name: switches_mainroom
+  scan_interval: 60
+  command: "curl --location --request GET 'http://{{states('sensor.host_ip')}}/webapp/data/getHomeDevice.php?req_name=remote_access_electric&req_action=status&req_dev_num=2' --header 'Cookie: PHPSESSID={{states('sensor.bestin_cookie_phpsessid')}}; user_id={{states('sensor.id')}}; user_name={{states('sensor.user_name')}}' | grep -oP '(?<=unit_status=\")(unset/on)|(?<=unit_status=\")(unset/off)'"
+- platform: command_line
+  name: switches_trainingroom
+  scan_interval: 60
+  command: "curl --location --request GET 'http://{{states('sensor.host_ip')}}/webapp/data/getHomeDevice.php?req_name=remote_access_electric&req_action=status&req_dev_num=3' --header 'Cookie: PHPSESSID={{states('sensor.bestin_cookie_phpsessid')}}; user_id={{states('sensor.id')}}; user_name={{states('sensor.user_name')}}' | grep -oP '(?<=unit_status=\")(unset/on)|(?<=unit_status=\")(unset/off)'"
+- platform: command_line
+  name: switches_seojae
+  scan_interval: 60
+  command: "curl --location --request GET 'http://{{states('sensor.host_ip')}}/webapp/data/getHomeDevice.php?req_name=remote_access_electric&req_action=status&req_dev_num=4' --header 'Cookie: PHPSESSID={{states('sensor.bestin_cookie_phpsessid')}}; user_id={{states('sensor.id')}}; user_name={{states('sensor.user_name')}}' | grep -oP '(?<=unit_status=\")(unset/on)|(?<=unit_status=\")(unset/off)'"
+- platform: command_line
+  name: heating_status_livingroom
+  scan_interval: 60
+  command: "curl --location --request GET 'http://{{states('sensor.host_ip')}}/webapp/data/getHomeDevice_heat.php?req_name=remote_access_temper&req_action=status&req_unit_num=room1' --header 'Cookie: PHPSESSID={{states('sensor.bestin_cookie_phpsessid')}}; user_id={{states('sensor.id')}}; user_name={{states('sensor.user_name')}}' | grep -oP '(?<=unit_status= \")(\\S+)(?=\")'"
+- platform: command_line
+  name: heating_status_mainroom
+  scan_interval: 60
+  command: "curl --location --request GET 'http://{{states('sensor.host_ip')}}/webapp/data/getHomeDevice_heat.php?req_name=remote_access_temper&req_action=status&req_unit_num=room2' --header 'Cookie: PHPSESSID={{states('sensor.bestin_cookie_phpsessid')}}; user_id={{states('sensor.id')}}; user_name={{states('sensor.user_name')}}' | grep -oP '(?<=unit_status= \")(\\S+)(?=\")'"
+- platform: command_line
+  name: heating_status_trainingroom
+  scan_interval: 60
+  command: "curl --location --request GET 'http://{{states('sensor.host_ip')}}/webapp/data/getHomeDevice_heat.php?req_name=remote_access_temper&req_action=status&req_unit_num=room3' --header 'Cookie: PHPSESSID={{states('sensor.bestin_cookie_phpsessid')}}; user_id={{states('sensor.id')}}; user_name={{states('sensor.user_name')}}' | grep -oP '(?<=unit_status= \")(\\S+)(?=\")'"
+- platform: command_line
+  name: heating_status_seojae
+  scan_interval: 60
+  command: "curl --location --request GET 'http://{{states('sensor.host_ip')}}/webapp/data/getHomeDevice_heat.php?req_name=remote_access_temper&req_action=status&req_unit_num=room4' --header 'Cookie: PHPSESSID={{states('sensor.bestin_cookie_phpsessid')}}; user_id={{states('sensor.id')}}; user_name={{states('sensor.user_name')}}' | grep -oP '(?<=unit_status= \")(\\S+)(?=\")'"
+  
+
