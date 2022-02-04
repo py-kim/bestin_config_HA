@@ -1,10 +1,10 @@
 # bestin_config_HA
 
-스마트홈1 유저를 위한 Home Assistant용 Configuration File
+아이파크 스마트홈1 유저를 위한 Home Assistant용 Configuration File
 
 ## 사전 요구사항
 
-- 스마트홈1 사용자
+- 아이파크 스마트홈1 사용자
 
   - 지원 아파트 목록
     - 서울 : '신공덕', '테헤란', '인왕산2차', '송파위례1차', '위례2차아이파크', '아현아이파크', '한남아이파크', '고덕숲아이파크', '삼성동센트럴아이파크'
